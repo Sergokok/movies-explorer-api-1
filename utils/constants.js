@@ -9,7 +9,7 @@ const MOVIE_NOT_FOUND_ERR_MSG = 'Фильм не найден.';
 const PAGE_NOT_FOUND_ERR_MSG = 'Страница не найдена';
 const AUTHORIZATION_ERR_MSG = 'Необходима авторизация.';
 const SERVER_ERR_MSG = 'Ошибка сервера';
-const INVALID_USER_DATA_ERR_MSG = 'Неправильные почта или пароль.';
+const INVALID_USER_DATA_ERR_MSG = 'Неправильные логин или пароль.';
 const INVALID_URL_ERR_MSG = 'Введите корректный URL';
 const INVALID_EMAIL_ERR_MSG = 'Введите корректный email';
 

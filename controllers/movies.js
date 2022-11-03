@@ -2,17 +2,16 @@ const Movies = require('../models/movies');
 
 const NotFoundError = require('../errors/not-found-err');
 const ForbiddenError = require('../errors/forbidden-err');
-const ServerError = require('../errors/server-err');
+// const ServerError = require('../errors/server-err');
 const BadRequestError = require('../errors/bad-request-err');
 const {
   FORBIDDEN_ERR_MSG,
   MOVIE_NOT_FOUND_ERR_MSG,
-  SERVER_ERR_MSG,
+  // SERVER_ERR_MSG,
   BAD_REQUEST_ERR_MSG,
 } = require('../utils/constants');
 
 // GET /movies — возвращает все сохранённые пользователем фильмы;
-
 module.exports.getMovies = (req, res, next) => {
   Movies.find({ owner: req.user._id })
     .then((movies) => res.send(movies))
@@ -35,9 +34,9 @@ module.exports.getMovies = (req, res, next) => {
     .then((movie) => res.send(movie))
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        return next(new BadRequestError(BAD_REQUEST_ERR_MSG));
+        next(new BadRequestError(BAD_REQUEST_ERR_MSG));
       }
-      return next(new ServerError(SERVER_ERR_MSG));
+      next(err);
     });
 };
 // module.exports.createMovies = (req, res, next) => {

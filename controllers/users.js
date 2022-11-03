@@ -8,20 +8,27 @@ const BadRequestError = require('../errors/bad-request-err');
 const ConflictError = require('../errors/conflict-err');
 const NotFoundError = require('../errors/not-found-err');
 // const ServerError = require('../errors/server-err');
+const { JWT_SECRET } = require('../utils/config');
 const {
   BAD_REQUEST_ERR_MSG,
   CONFLICT_ERR_MSG,
   USER_NOT_FOUND_ERR_MSG,
 } = require('../utils/constants');
 
-const { JWT_SECRET, NODE_ENV } = process.env;
+// const { JWT_SECRET, NODE_ENV } = process.env;
 
 // POST / signin  — авторизация пользователя
 module.exports.login = (req, res, next) => {
   const { email, password } = req.body;
   User.findUserByCredentials(email, password)
     .then((user) => {
-      const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'secret-key', { expiresIn: '7d' });
+      const token = jwt.sign(
+        { _id: user._id },
+        JWT_SECRET,
+        { expiresIn: '7d' },
+      );
+      // NODE_ENV === 'production' ? JWT_SECRET : 'secret-key',
+      //   { expiresIn: '7d' });
       res.send({ token });
     })
     .catch(next);

@@ -1,16 +1,23 @@
 const { celebrate, Joi } = require('celebrate');
-const validator = require('validator');
+const { isURL } = require('validator');
 const { INVALID_URL_ERR_MSG } = require('../utils/constants');
 
-const signupValidation = celebrate({
+const validateUrl = (value, helpers) => {
+  if (isURL(value)) {
+    return value;
+  }
+  return helpers.message(INVALID_URL_ERR_MSG);
+};
+
+const createUserValidation = celebrate({
   body: Joi.object().keys({
     name: Joi.string().min(2).max(30).required(),
-    email: Joi.string().required().email(),
+    email: Joi.string().required().email().trim(),
     password: Joi.string().required(),
   }),
 });
 
-const signinValidation = celebrate({
+const loginValidation = celebrate({
   body: Joi.object().keys({
     email: Joi.string().email().required(),
     password: Joi.string().required(),
@@ -19,39 +26,29 @@ const signinValidation = celebrate({
 
 const updateUserValidation = celebrate({
   body: Joi.object().keys({
-    name: Joi.string().min(2).max(30).required(),
-    email: Joi.string().required().email(),
+    email: Joi.string().required().email().trim(),
+    name: Joi
+      .string()
+      .min(2)
+      .max(30)
+      .required()
+      .trim(),
   }),
 });
 
-const newMovieValidation = celebrate({
+const createMovieValidation = celebrate({
   body: Joi.object().keys({
-    country: Joi.string().required(),
-    director: Joi.string().required(),
+    country: Joi.string().required().trim(),
+    director: Joi.string().required().trim(),
     duration: Joi.number().required(),
-    year: Joi.string().required(),
+    year: Joi.string().required().trim(),
     description: Joi.string().required(),
-    image: Joi.string().required().custom((value, helpers) => {
-      if (validator.isURL(value)) {
-        return value;
-      }
-      return helpers.message(INVALID_URL_ERR_MSG);
-    }),
-    trailerLink: Joi.string().required().custom((value, helpers) => {
-      if (validator.isURL(value)) {
-        return value;
-      }
-      return helpers.message(INVALID_URL_ERR_MSG);
-    }),
-    thumbnail: Joi.string().required().custom((value, helpers) => {
-      if (validator.isURL(value)) {
-        return value;
-      }
-      return helpers.message(INVALID_URL_ERR_MSG);
-    }),
+    image: Joi.string().required().custom(validateUrl),
+    trailerLink: Joi.string().required().custom(validateUrl),
+    thumbnail: Joi.string().required().custom(validateUrl),
     movieId: Joi.number().required(),
-    nameRU: Joi.string().required(),
-    nameEN: Joi.string().required(),
+    nameRU: Joi.string().required().trim(),
+    nameEN: Joi.string().required().trim(),
   }),
 });
 
@@ -62,9 +59,9 @@ const deleteMovieValidation = celebrate({
 });
 
 module.exports = {
-  signupValidation,
-  signinValidation,
+  createUserValidation,
+  loginValidation,
   updateUserValidation,
-  newMovieValidation,
+  createMovieValidation,
   deleteMovieValidation,
 };
