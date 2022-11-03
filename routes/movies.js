@@ -1,5 +1,5 @@
 const moviesRouter = require('express').Router();
-const { celebrate, Joi } = require('celebrate');
+// const { celebrate, Joi } = require('celebrate');
 
 const {
   getMovies,
@@ -7,19 +7,31 @@ const {
   deleteMovies,
 } = require('../controllers/movies');
 
-moviesRouter.get('/', getMovies);
-moviesRouter.post('/', celebrate({
-  body: Joi.object().keys({
-    name: Joi.string().required().min(2).max(30),
-    link: Joi.string().required().regex(/^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/),
-  }),
-}), createMovies);
+const {
+  createMovieValidation,
+  deleteMovieValidation,
+} = require('../middlewares/validation');
 
-moviesRouter.delete('/:movieId', celebrate({
-  params: Joi.object().keys({
-    cardId: Joi.string().regex(/^[0-9a-f]{24}$/i),
-  }),
-}), deleteMovies);
+moviesRouter.get('/', getMovies);
+moviesRouter.post('/', createMovieValidation, createMovies);
+moviesRouter.delete('/:movieId', deleteMovieValidation, deleteMovies);
+
+module.exports = moviesRouter;
+
+// moviesRouter.get('/', getMovies);
+// moviesRouter.post('/', celebrate({
+//   body: Joi.object().keys({
+//     name: Joi.string().required().min(2).max(30),
+// eslint-disable-next-line max-len
+//     link: Joi.string().required().regex(/^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/),
+//   }),
+// }), createMovies);
+//
+// moviesRouter.delete('/:movieId', celebrate({
+//   params: Joi.object().keys({
+//     cardId: Joi.string().regex(/^[0-9a-f]{24}$/i),
+//   }),
+// }), deleteMovies);
 
 // moviesRouter.put('/:cardId/likes', celebrate({
 //   params: Joi.object().keys({
@@ -33,4 +45,4 @@ moviesRouter.delete('/:movieId', celebrate({
 //   }),
 // }), dislikeCard);
 
-module.exports = moviesRouter;
+// module.exports = moviesRouter;

@@ -27,7 +27,7 @@ module.exports.getMovies = (req, res, next) => {
 // };
 
 // POST /movies — создаёт фильм с переданными в теле
-module.exports.getMovies = (req, res, next) => {
+module.exports.createMovies = (req, res, next) => {
   Movies.create({
     ...req.body, owner: req.user._id,
   })
