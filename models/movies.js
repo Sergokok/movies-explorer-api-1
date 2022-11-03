@@ -28,7 +28,7 @@ const movieSchema = new mongoose.Schema({
     validate: {
       validator: (v) => isURL(v),
       message: INVALID_URL_ERR_MSG,
-    }
+    },
   },
   trailerLink: {
     type: String,
@@ -36,7 +36,7 @@ const movieSchema = new mongoose.Schema({
     validate: {
       validator: (v) => isURL(v),
       message: INVALID_URL_ERR_MSG,
-    }
+    },
   },
   thumbnail: {
     type: String,
@@ -44,7 +44,7 @@ const movieSchema = new mongoose.Schema({
     validate: {
       validator: (v) => isURL(v),
       message: INVALID_URL_ERR_MSG,
-    }
+    },
   },
   owner: {
     type: mongoose.ObjectId,

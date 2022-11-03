@@ -1,5 +1,5 @@
-const DB_URL = 'mongodb://localhost:27017/moviesdb';
-const SECRET_KEY = 'some-secret-key';
+// const DB_URL = 'mongodb://localhost:27017/moviesdb';
+// const SECRET_KEY = 'some-secret-key';
 
 const BAD_REQUEST_ERR_MSG = 'Переданы некорректные данные.';
 const CONFLICT_ERR_MSG = 'Данный email уже существует.';
@@ -14,8 +14,8 @@ const INVALID_URL_ERR_MSG = 'Введите корректный URL';
 const INVALID_EMAIL_ERR_MSG = 'Введите корректный email';
 
 module.exports = {
-  DB_URL,
-  SECRET_KEY,
+  // DB_URL,
+  // SECRET_KEY,
   BAD_REQUEST_ERR_MSG,
   CONFLICT_ERR_MSG,
   FORBIDDEN_ERR_MSG,
