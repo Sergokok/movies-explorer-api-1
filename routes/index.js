@@ -5,7 +5,7 @@ const routerMovies = require('./movies');
 const auth = require('../middlewares/auth');
 const NotFoundError = require('../errors/not-found-err');
 const { PAGE_NOT_FOUND_ERR_MSG } = require('../utils/constants');
-const { createUserValidation, loginValidation } = require('../middlewares/validaton');
+const { createUserValidation, loginValidation } = require('../middlewares/validation');
 
 router.post('/signin', loginValidation, login);
 
